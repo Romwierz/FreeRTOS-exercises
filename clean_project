@@ -1,0 +1,18 @@
+#!/bin/bash
+# clean_project - remove unwanted parts of the project's template
+
+# remove files and folders
+rm README.md
+rm -r unit_test
+rm src/my_math*
+
+# remove from Makefile
+{
+    read -r firstLine && echo "$firstLine" > tmp.mk
+    # last line ends with EOF so it must be handled with '||' operator
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        [[ "$line" =~ my_math* ]] && continue
+        echo "$line" >> tmp.mk
+    done
+} < src/Makefile
+mv -T tmp.mk src/Makefile
