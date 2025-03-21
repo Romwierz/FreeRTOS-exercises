@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "name": "Debug STM32",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${workspaceRoot}",
+            "executable": "./src/out/main.elf",
+            "configFiles": [
+                "openocd.cfg"
+            ],
+            "svdFile": "${workspaceRoot}/STM32L476.svd",
+            "preLaunchTask": "Build STM",
+            "showDevDebugOutput": "raw"
+        },
+        {
+            "name": "Debug Unit test my_math",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${workspaceRoot}",
+            "executable": "./unit_test/my_math/out/my_math.elf",
+            "configFiles": [
+                "openocd.cfg"
+            ],
+            "svdFile": "${workspaceRoot}/STM32L476.svd"
+            // "showDevDebugOutput": "raw"
+        }
+    ]
+}
