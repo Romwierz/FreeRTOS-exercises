@@ -1,0 +1,9 @@
+{
+    "cortex-debug.openocdPath": "openocd",
+    "files.associations": {
+        "stm32l4xx.h": "c",
+        "stm32l476xx.h": "c",
+        "main.h": "c"
+    },
+    "cortex-debug.variableUseNaturalFormat": true
+}
