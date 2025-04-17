@@ -3,7 +3,19 @@
     "files.associations": {
         "stm32l4xx.h": "c",
         "stm32l476xx.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "cmsis_os2.h": "c",
+        "freertos.h": "c",
+        "stm32l4xx_hal.h": "c",
+        "stm32l4xx_hal_conf.h": "c",
+        "stm32l4xx_hal_rcc.h": "c",
+        "stm32l4xx_hal_def.h": "c",
+        "stddef.h": "c",
+        "stdint.h": "c",
+        "stdlib.h": "c",
+        "portable.h": "c",
+        "projdefs.h": "c",
+        "task.h": "c"
     },
     "cortex-debug.variableUseNaturalFormat": true
 }

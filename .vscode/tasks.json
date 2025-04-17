@@ -23,7 +23,8 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "make",
+			// if ./Build exists just run make, if it doesn't exist run make with bear
+            "command": "[ -d ./Build ] && make || (bear -- make -B && mv compile_commands.json ./Build)",
             "options": {
 				"cwd": "${workspaceRoot}"
 			},
@@ -62,6 +63,18 @@
 			"label": "Build (Dry Run)",
 			"type": "shell",
 			"command": "make -n -B -C src | grep -v 'mkdir -p'",
+			"options": {
+				"cwd": "${workspaceRoot}"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "Update Compilation Info",
+			"type": "shell",
+			"command": "bear -- make -B && mv compile_commands.json ./Build",
 			"options": {
 				"cwd": "${workspaceRoot}"
 			},
