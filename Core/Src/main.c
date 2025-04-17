@@ -15,6 +15,8 @@
  ******************************************************************************
  */
 #include "main.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -25,6 +27,10 @@ int main(void)
     SystemClock_Config();
 
     MX_GPIO_Init();
+
+    xTaskCreate( vTaskLedBlink, "Task Led On", 500, NULL, 1, NULL );
+
+    vTaskStartScheduler();
 
     while (1)
     {

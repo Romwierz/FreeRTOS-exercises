@@ -53,7 +53,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void vTaskLedBlink( void *pvParameters );
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

@@ -34,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define mainDELAY_LOOP_COUNT 200000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -54,6 +54,22 @@
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
+void vTaskLedBlink( void *pvParameters )
+{
+    volatile uint32_t ul;
+
+    // HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+
+    for ( ;; )
+    {
+        HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+
+        for ( ul = 0; ul < mainDELAY_LOOP_COUNT; ul++)
+        {
+        }
+    }
+}
+
 void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
 {
   /* Run time stack overflow checking is performed if
