@@ -1,8 +1,19 @@
+# -------------------------------------------------------------------
+# Compiler
+# -------------------------------------------------------------------
 CC = arm-none-eabi-gcc
 
-CPU = -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16
-OPT = -g -Og -gdwarf-2
+# -------------------------------------------------------------------
+# CPU options
+# -------------------------------------------------------------------
+CPU = -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16
+OPT = -std=gnu11 -g3 -O0 \
+# -Og \
+# -gdwarf-2 \
 
+# -------------------------------------------------------------------
+# Defines
+# -------------------------------------------------------------------
 DEFINES := \
 DEBUG \
 STM32L476xx \
@@ -10,6 +21,9 @@ USE_HAL_DRIVER \
 
 DEFINES_FLAGS := $(addprefix -D,$(DEFINES))
 
+# -------------------------------------------------------------------
+# Includes
+# -------------------------------------------------------------------
 INC_DIRS := \
 ./Core/Inc \
 ./Drivers/CMSIS/Device/ST/STM32L4xx/Include \
@@ -22,25 +36,33 @@ INC_DIRS := \
 
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
+# -------------------------------------------------------------------
+# Compilation flags
+# -------------------------------------------------------------------
 SECTIONS_FLAGS := -ffunction-sections -fdata-sections
 DEPS_FLAGS := -MMD -MP
 
-CFLAGS = $(CPU) $(OPT) $(DEFINES_FLAGS) $(INC_FLAGS) $(SECTIONS_FLAGS) -fstack-usage $(DEPS_FLAGS)
-CFLAGS += -Wpedantic -Wall
-# CFLAGS += -Werror
+CFLAGS = $(CPU) $(OPT) $(DEFINES_FLAGS) $(INC_FLAGS) $(SECTIONS_FLAGS) \
+-fstack-usage  $(DEPS_FLAGS) \
+--specs=nano.specs \
+-Wpedantic -Wall \
 
+# -------------------------------------------------------------------
+# Assembly flags
+# -------------------------------------------------------------------
 ASFLAGS = $(CPU) $(OPT)
-# ASFLAGS += -Werror
 
-LDFLAGS = -specs=nosys.specs -T$(LINKER_SCRIPT) -Wl,-Map,$(TARGET_EXEC).map,--no-warn-rwx-segment -Wl,--gc-sections $(CPU) $(OPT)
+# -------------------------------------------------------------------
+# Linking flags
+# -------------------------------------------------------------------
+LDFLAGS = -specs=nosys.specs -T$(LINKER_SCRIPT) -Wl,-Map,$(TARGET_EXEC).map,--no-warn-rwx-segment \
+-Wl,--gc-sections --specs=nano.specs $(CPU) $(OPT) -Wl,--start-group -lc -lm -Wl,--end-group
 
 LINKER_SCRIPT := ./STM32L476RGTX_FLASH.ld
 
-#####################################################
-
-BUILD_DIR := ./Build
-TARGET_EXEC := $(BUILD_DIR)/main
-
+# -------------------------------------------------------------------
+# Sources (+ objects and dependencies)
+# -------------------------------------------------------------------
 SRC_DIRS := \
 ./Core/Src \
 ./Core/Startup \
@@ -49,8 +71,12 @@ SRC_DIRS := \
 ./FreeRTOS/Source/portable/GCC/ARM_CM4F \
 ./FreeRTOS/Source/portable/MemMang \
 
-# Find all the C and ASM files we want to compile
-# Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
+BUILD_DIR := ./Build
+TARGET_EXEC := $(BUILD_DIR)/main
+
+# Find all the C and ASM files we want to compile.
+# Note the single quotes around the * expressions.
+# The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
 SRCS := $(shell find $(SRC_DIRS) -name '*.c' -or -name '*.s')
 
 # Prepends BUILD_DIR and appends .o to every src file
@@ -61,6 +87,9 @@ OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 # As an example, ./build/hello.cpp.o turns into ./build/hello.cpp.d
 DEPS := $(OBJS:.o=.d)
 
+# -------------------------------------------------------------------
+# Build targets
+# -------------------------------------------------------------------
 all: $(TARGET_EXEC).bin $(TARGET_EXEC).hex $(TARGET_EXEC).list
 
 $(TARGET_EXEC).bin: $(TARGET_EXEC).elf
