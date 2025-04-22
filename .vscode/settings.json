@@ -15,7 +15,8 @@
         "stdlib.h": "c",
         "portable.h": "c",
         "projdefs.h": "c",
-        "task.h": "c"
+        "task.h": "c",
+        "freertosconfig.h": "c"
     },
     "cortex-debug.variableUseNaturalFormat": true
 }

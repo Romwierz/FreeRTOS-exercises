@@ -24,7 +24,7 @@
             "label": "Build",
             "type": "shell",
 			// if ./Build exists just run make, if it doesn't exist run make with bear
-            "command": "[ -d ./Build ] && make || (bear -- make -B && mv compile_commands.json ./Build)",
+            "command": "[ -d ./Build ] && make || (bear -- make -B && mv compile_commands.json ./Build || rm compile_commands.json)",
             "options": {
 				"cwd": "${workspaceRoot}"
 			},
@@ -74,7 +74,7 @@
 		{
 			"label": "Update Compilation Info",
 			"type": "shell",
-			"command": "bear -- make -B && mv compile_commands.json ./Build",
+			"command": "bear -- make -B && mv compile_commands.json ./Build || rm compile_commands.json",
 			"options": {
 				"cwd": "${workspaceRoot}"
 			},
