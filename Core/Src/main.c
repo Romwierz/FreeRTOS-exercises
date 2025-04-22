@@ -32,13 +32,15 @@ int main(void)
     MX_GPIO_Init();
     MX_USART2_UART_Init();
 
-    xTaskCreate( vTaskLedBlink, "Task Led On", 500, NULL, 1, NULL );
+    xTaskCreate( vTaskLedBlink, "Task Led On", 250, NULL, 1, NULL );
+    xTaskCreate( vTaskSendMsg, "Task Send Message", 250, NULL, 1, NULL );
 
     vTaskStartScheduler();
 
     while (1)
     {
-        HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+        printf("No dzień dobry\n");
+        // HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
         HAL_Delay(2000);
     }
 }

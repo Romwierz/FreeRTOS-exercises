@@ -70,6 +70,23 @@ void vTaskLedBlink( void *pvParameters )
     }
 }
 
+void vTaskSendMsg( void *pvParameters )
+{
+    volatile uint32_t ul;
+
+    // HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+
+    for ( ;; )
+    {
+        printf("No dzień dobry\n");
+        printf("Żegnam...\n\n");
+
+        for ( ul = 0; ul < mainDELAY_LOOP_COUNT; ul++)
+        {
+        }
+    }
+}
+
 void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
 {
   /* Run time stack overflow checking is performed if
