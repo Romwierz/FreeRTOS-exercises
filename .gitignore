@@ -1,1 +1,6 @@
 Build/
+
+Drivers/CMSIS/Device/ST/STM32L4xx/LICENSE.txt
+Drivers/CMSIS/Device/ST/STM32L4xx/License.md
+Drivers/CMSIS/LICENSE.txt
+Drivers/STM32L4xx_HAL_Driver/LICENSE.txt
