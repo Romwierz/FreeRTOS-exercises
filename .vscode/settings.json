@@ -16,7 +16,8 @@
         "portable.h": "c",
         "projdefs.h": "c",
         "task.h": "c",
-        "freertosconfig.h": "c"
+        "freertosconfig.h": "c",
+        "stm32l4xx_hal_tim.h": "c"
     },
     "cortex-debug.variableUseNaturalFormat": true
 }
