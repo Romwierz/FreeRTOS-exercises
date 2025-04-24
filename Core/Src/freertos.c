@@ -24,7 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,35 +56,32 @@
 /* USER CODE BEGIN Application */
 void vTaskLedBlink( void *pvParameters )
 {
-    volatile uint32_t ul;
+  TickType_t xDelay = 1000 / portTICK_PERIOD_MS;
 
-    // HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+  for (;;)
+  {
+    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 
-    for ( ;; )
-    {
-        HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-
-        for ( ul = 0; ul < mainDELAY_LOOP_COUNT; ul++)
-        {
-        }
-    }
+    vTaskDelay(xDelay);
+  }
 }
 
-void vTaskSendMsg( void *pvParameters )
+void vTaskSendMsg(void *pvParameters)
 {
-    volatile uint32_t ul;
+  TickType_t xDelay = 1000 / portTICK_PERIOD_MS;
+  char *message = (char *)pvParameters;
 
-    // HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+  if (strcmp(message, "No dzień dobry\n") == 0)
+  {
+    xDelay *= 2;
+  }
 
-    for ( ;; )
-    {
-        printf("No dzień dobry\n");
-        printf("Żegnam...\n\n");
+  for (;;)
+  {
+    printf(message);
 
-        for ( ul = 0; ul < mainDELAY_LOOP_COUNT; ul++)
-        {
-        }
-    }
+    vTaskDelay(xDelay);
+  }
 }
 
 void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )

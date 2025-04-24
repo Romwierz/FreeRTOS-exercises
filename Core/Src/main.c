@@ -32,8 +32,12 @@ int main(void)
     MX_GPIO_Init();
     MX_USART2_UART_Init();
 
-    xTaskCreate( vTaskLedBlink, "Task Led On", 250, NULL, 1, NULL );
-    xTaskCreate( vTaskSendMsg, "Task Send Message", 250, NULL, 1, NULL );
+    const char *const helloMsg = "No dzień dobry\n";
+    const char *const goodbyeMsg = "Żegnam\n";
+
+    xTaskCreate( vTaskLedBlink, "Task Led On", 250 , NULL, 1, NULL );
+    xTaskCreate( vTaskSendMsg, "Task Send Message1", 250, (void*)helloMsg, 2, NULL );
+    xTaskCreate( vTaskSendMsg, "Task Send Message2", 250, (void*)goodbyeMsg, 1, NULL );
 
     vTaskStartScheduler();
 
