@@ -84,6 +84,32 @@ void vTaskSendMsg(void *pvParameters)
   }
 }
 
+void vTaskShowStats(void *pvParameters)
+{
+  const TickType_t xDelay = 5000 / portTICK_PERIOD_MS;
+
+  size_t freeHeapSize;
+  size_t minimumEverFreeHeapSize;
+  static char cStringBuffer[ 512 ];
+
+  for ( ;; )
+  {
+    freeHeapSize = xPortGetFreeHeapSize();
+    minimumEverFreeHeapSize = xPortGetMinimumEverFreeHeapSize();
+    // vTaskGetRunTimeStats( cStringBuffer );
+    vTaskList( cStringBuffer );
+
+    printf("\nTask\t\tState\tPrio\tStack\tID\t\n");
+    printf("------------------------------------------------|\n");
+    printf("%s", cStringBuffer);
+    printf("------------------------------------------------|\n");
+    printf("Niepodpalona styrta obecnie: %d\n", freeHeapSize);
+    printf("Najmniej podpalonej styrty w historii: %d\n\n", minimumEverFreeHeapSize);
+    
+    vTaskDelay(xDelay);
+  }
+}
+
 void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
 {
   /* Run time stack overflow checking is performed if

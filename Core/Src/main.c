@@ -38,6 +38,7 @@ int main(void)
     xTaskCreate( vTaskLedBlink, "Task Led On", 250 , NULL, 1, NULL );
     xTaskCreate( vTaskSendMsg, "Task Send Message1", 250, (void*)helloMsg, 2, NULL );
     xTaskCreate( vTaskSendMsg, "Task Send Message2", 250, (void*)goodbyeMsg, 1, NULL );
+    xTaskCreate( vTaskShowStats, "Task Show Stats", 250, NULL, 3, NULL );
 
     vTaskStartScheduler();
 

@@ -56,6 +56,7 @@
 #endif
 #ifndef CMSIS_device_header
 #define CMSIS_device_header "stm32l4xx.h"
+#include CMSIS_device_header
 #endif /* CMSIS_device_header */
 
 #define configENABLE_FPU                         0
@@ -70,7 +71,7 @@
 #define configTICK_RATE_HZ                       ((TickType_t)1000)
 #define configMAX_PRIORITIES                     ( 56 )
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)128)
-#define configTOTAL_HEAP_SIZE                    ((size_t)3500)
+#define configTOTAL_HEAP_SIZE                    ((size_t)5000)
 #define configMAX_TASK_NAME_LEN                  ( 16 )
 #define configUSE_TRACE_FACILITY                 1
 #define configUSE_16_BIT_TICKS                   0
@@ -170,6 +171,14 @@ standard names. */
 /* USER CODE BEGIN Defines */
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
 // #define traceTASK_SWITCHED_OUT() printf("Task Switched Out")
+#define configGENERATE_RUN_TIME_STATS 1
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()  \
+  do {                                            \
+    DWT->CTRL |= 1;                               \
+    DWT->CYCCNT = 0;                              \
+  }while(0);
+#define portGET_RUN_TIME_COUNTER_VALUE() DWT->CYCCNT
 /* USER CODE END Defines */
 
 #endif /* FREERTOS_CONFIG_H */
